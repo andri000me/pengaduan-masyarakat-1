@@ -1,5 +1,5 @@
 <?php 
-	require 'koneksi.php';
+	require '../koneksi.php';
 	$nik = $_GET['nik'];
 
 	$deleteMasyarakat = mysqli_query($koneksi, "DELETE FROM masyarakat WHERE nik = '$nik'");

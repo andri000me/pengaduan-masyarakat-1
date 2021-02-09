@@ -1,5 +1,5 @@
 <?php 
-	require 'koneksi.php';
+	require '../koneksi.php';
 	$petugas = mysqli_query($koneksi, "SELECT * FROM petugas");
 ?>
 <!DOCTYPE html>
@@ -10,6 +10,8 @@
 	<title>Daftar Petugas</title>
 </head>
 <body>
+	<?php include 'sidebar.php'; ?>
+	
 	<a href="insert_petugas.php">Tambah Petugas</a>
 	<table border="1" cellpadding="10" cellspacing="0">
 		<thead>
@@ -32,8 +34,12 @@
 					<td><?= $dataPetugas['telp']; ?></td>
 					<td><?= $dataPetugas['level']; ?></td>
 					<td>
-						<a href="update_petugas.php?id_petugas=<?= $dataPetugas['id_petugas']; ?>">Ubah</a>
-						<a onclick="return confirm('Apakah anda yakin ingin menghapus data petugas dengan username <?= $dataPetugas['username']; ?>?')" href="delete_petugas.php?id_petugas=<?= $dataPetugas['id_petugas']; ?>">Hapus</a>
+						<?php if ($dataPetugas['level'] != 'admin'): ?>
+							<a href="update_petugas.php?id_petugas=<?= $dataPetugas['id_petugas']; ?>">Ubah</a>
+							<a onclick="return confirm('Apakah anda yakin ingin menghapus data petugas dengan username <?= $dataPetugas['username']; ?>?')" href="delete_petugas.php?id_petugas=<?= $dataPetugas['id_petugas']; ?>">Hapus</a>
+						<?php else: ?>
+							<span>Admin</span>
+						<?php endif ?>
 					</td>
 				</tr>
 			<?php endforeach ?>

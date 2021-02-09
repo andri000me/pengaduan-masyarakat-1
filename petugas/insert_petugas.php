@@ -1,9 +1,9 @@
 <?php 
-	require 'koneksi.php';
+	require '../koneksi.php';
 	if (isset($_POST['btnInsertPetugas'])) {
 		$nama_petugas = $_POST['nama_petugas'];
 		$username = $_POST['username'];
-		$password = $_POST['password'];
+		$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 		$telp = $_POST['telp'];
 		$level = $_POST['level'];
 
@@ -22,6 +22,8 @@
 	<title>Tambah Petugas</title>
 </head>
 <body>
+	<?php include 'sidebar.php'; ?>
+	
 	<form method="post">
 		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
@@ -44,13 +46,12 @@
 				<td><label>Level</label></td>
 				<td>
 					<select name="level">
-						<option value="admin">admin</option>
 						<option value="petugas">petugas</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td><button type="submit" name="btnInsertPetugas">Kirim</button></td>
+				<td colspan="2"><button type="submit" name="btnInsertPetugas">Kirim</button></td>
 			</tr>
 		</table>
 	</form>

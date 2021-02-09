@@ -1,5 +1,5 @@
 <?php 
-	require 'koneksi.php';
+	require '../koneksi.php';
 	
 	$id_petugas = $_GET['id_petugas'];
 	$getPetugasById = mysqli_query($koneksi, "SELECT * FROM petugas WHERE id_petugas = '$id_petugas'");
@@ -25,6 +25,8 @@
 	<title>Ubah Petugas - <?= $dataPetugas['username']; ?></title>
 </head>
 <body>
+	<?php include 'sidebar.php'; ?>
+	
 	<form method="post">
 		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
@@ -39,18 +41,12 @@
 				<td><label>Level</label></td>
 				<td>
 					<select name="level">
-						<?php if ($dataPetugas['level'] == 'admin'): ?>
-							<option value="admin">admin</option>
-							<option value="petugas">petugas</option>
-						<?php else: ?>
-							<option value="petugas">petugas</option>
-							<option value="admin">admin</option>
-						<?php endif ?>
+						<option value="petugas">petugas</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td><button type="submit" name="btnUpdatePetugas">Kirim</button></td>
+				<td colspan="2"><button type="submit" name="btnUpdatePetugas">Kirim</button></td>
 			</tr>
 		</table>
 	</form>

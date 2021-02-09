@@ -1,5 +1,5 @@
 <?php 
-	require 'koneksi.php';
+	require '../koneksi.php';
 	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat");
 ?>
 
@@ -11,6 +11,8 @@
 	<title>Daftar Masyarakat</title>
 </head>
 <body>
+	<?php include 'sidebar.php'; ?>
+
 	<a href="insert_masyarakat.php">Tambah Masyarakat</a>
 	<table border="1" cellpadding="10" cellspacing="0">
 		<thead>

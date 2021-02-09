@@ -1,5 +1,5 @@
 <?php 
-	require 'koneksi.php';
+	require '../koneksi.php';
 	if (isset($_POST['btnInsertMasyarakat'])) {
 		$nik = $_POST['nik'];
 		$nama = $_POST['nama'];
@@ -25,11 +25,13 @@
 	<title>Tambah Masyarakat</title>
 </head>
 <body>
+	<?php include 'sidebar.php'; ?>
+
 	<form method="post">
 		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
 				<td><label>NIK</label></td>
-				<td><input type="text" name="nik"></td>
+				<td><input type="number" name="nik"></td>
 			</tr>
 			<tr>
 				<td><label>Nama</label></td>
@@ -52,7 +54,7 @@
 				<td><textarea name="alamat"></textarea></td>
 			</tr>
 			<tr>
-				<td><button type="submit" name="btnInsertMasyarakat">Kirim</button></td>
+				<td colspan="2"><button type="submit" name="btnInsertMasyarakat">Kirim</button></td>
 			</tr>
 		</table>
 	</form>

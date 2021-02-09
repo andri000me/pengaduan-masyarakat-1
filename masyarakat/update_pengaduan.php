@@ -1,5 +1,5 @@
 <?php 
-	require 'koneksi.php';
+	require '../koneksi.php';
 	
 	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
 	
@@ -9,10 +9,9 @@
 
 
 	if (isset($_POST['btnUpdatePengaduan'])) {
-		$nik = $_POST['nik'];
+		$nik = $_SESSION['nik'];
 		$tgl_pengaduan = $_POST['tgl_pengaduan'];
 		$isi_laporan = $_POST['isi_laporan'];
-		$status = $_POST['status'];
 
 		if ($_FILES['foto']['name'] != "") {
 			$ekstensi_diperbolehkan	= array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
@@ -24,14 +23,14 @@
 
 			if (in_array($ekstensi, $ekstensi_diperbolehkan) == true){
 				if($ukuran < 204800){			
-					move_uploaded_file($file_tmp, 'img/' . $foto);
+					move_uploaded_file($file_tmp, '../img/' . $foto);
 				}
 			}
 		} else {
 			$foto = $_POST['foto_lama'];
 		}
 
-		$updatePengaduan = mysqli_query($koneksi, "UPDATE pengaduan SET tgl_pengaduan = '$tgl_pengaduan', nik = '$nik', isi_laporan = '$isi_laporan', foto = '$foto', status = '$status' WHERE id_pengaduan = '$id_pengaduan'");
+		$updatePengaduan = mysqli_query($koneksi, "UPDATE pengaduan SET tgl_pengaduan = '$tgl_pengaduan', nik = '$nik', isi_laporan = '$isi_laporan', foto = '$foto' WHERE id_pengaduan = '$id_pengaduan'");
 		if ($updatePengaduan) {
 			header("Location: show_pengaduan.php");
 		}
@@ -45,20 +44,15 @@
 	<title>Ubah Pengaduan - <?= $dataPengaduan['isi_laporan']; ?></title>
 </head>
 <body>
+	<?php include 'sidebar.php'; ?>
+	
 	<form method="post" enctype="multipart/form-data">
 		<input type="hidden" name="foto_lama" value="<?= $dataPengaduan['foto']; ?>">
 		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
 				<td><label>NIK</label></td>
 				<td>
-					<select name="nik">
-						<option value="<?= $dataPengaduan['nik']; ?>"><?= $dataPengaduan['nik']; ?></option>
-						<?php foreach ($masyarakat as $dataMasyarakat): ?>
-							<?php if ($dataPengaduan['nik'] != $dataMasyarakat['nik']): ?>
-								<option value="<?= $dataMasyarakat['nik']; ?>"><?= $dataMasyarakat['nik']; ?></option>
-							<?php endif ?>
-						<?php endforeach ?>
-					</select>
+					<input type="text" disabled value="<?= $_SESSION['nik']; ?>">
 				</td>
 			</tr>
 			<tr>
@@ -72,24 +66,18 @@
 			<tr>
 				<td><label>Foto</label></td>
 				<td>
-					<img style="width: 75px" src="img/<?= $dataPengaduan['foto']; ?>" alt="foto"><br>
+					<img style="width: 75px" src="../img/<?= $dataPengaduan['foto']; ?>" alt="foto"><br>
 					<input type="file" name="foto">
 				</td>
 			</tr>
 			<tr>
 				<td><label>status</label></td>
-				<td><select name="status">
-					<?php if ($dataPengaduan['status'] == 'proses'): ?>
-						<option value="proses">Proses</option>
-						<option value="selesai">Selesai</option>
-					<?php else: ?>
-						<option value="selesai">Selesai</option>
-						<option value="proses">Proses</option>
-					<?php endif ?>
-				</select></td>
+				<td>
+					<input type="text" disabled value="<?= $dataPengaduan['status']; ?>">
+				</td>
 			</tr>
 			<tr>
-				<td><button type="submit" name="btnUpdatePengaduan">Kirim</button></td>
+				<td colspan="2"><button type="submit" name="btnUpdatePengaduan">Kirim</button></td>
 			</tr>
 		</table>
 	</form>

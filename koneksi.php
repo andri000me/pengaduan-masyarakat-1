@@ -1,4 +1,6 @@
 <?php 
+	session_start();
+	
 	$hostname	= 'localhost';
 	$username 	= 'root';
 	$password 	= '';
@@ -8,5 +10,3 @@
 		// echo "berhasil";
 	}
  ?>
-
-<?php include 'sidebar.php'; ?>

@@ -1,5 +1,5 @@
 <?php 
-	require 'koneksi.php';
+	require '../koneksi.php';
 	
 	$nik = $_GET['nik'];
 	$getMasyarakatById = mysqli_query($koneksi, "SELECT * FROM masyarakat WHERE nik = '$nik'");
@@ -27,6 +27,7 @@
 	<title>Ubah Masyarakat - <?= $dataMasyarakat['username']; ?></title>
 </head>
 <body>
+	<?php include 'sidebar.php'; ?>
 	<form method="post">
 		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
