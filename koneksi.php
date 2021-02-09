@@ -8,3 +8,5 @@
 		// echo "berhasil";
 	}
  ?>
+
+<?php include 'sidebar.php'; ?>

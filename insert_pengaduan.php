@@ -8,7 +8,7 @@
 		$isi_laporan = $_POST['isi_laporan'];
 		$status = $_POST['status'];
 		
-		$ekstensi_diperbolehkan	= array('png','jpg', 'jpeg');
+		$ekstensi_diperbolehkan	= array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
 		$foto = $_FILES['foto']['name'];
 		$x = explode('.', $foto);
 		$ekstensi = strtolower(end($x));
@@ -35,7 +35,7 @@
 </head>
 <body>
 	<form method="post" enctype="multipart/form-data">
-		<table>
+		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
 				<td><label>NIK</label></td>
 				<td>

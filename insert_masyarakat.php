@@ -26,7 +26,7 @@
 </head>
 <body>
 	<form method="post">
-		<table>
+		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
 				<td><label>NIK</label></td>
 				<td><input type="text" name="nik"></td>

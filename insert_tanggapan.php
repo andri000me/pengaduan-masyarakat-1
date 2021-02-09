@@ -24,7 +24,7 @@
 </head>
 <body>
 	<form method="post">
-		<table>
+		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
 				<td><label>Isi Laporan</label></td>
 				<td>
