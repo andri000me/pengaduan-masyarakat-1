@@ -1,5 +1,8 @@
 <?php 
 	require '../koneksi.php';
+	if (!isset($_SESSION['id_petugas'])) {
+		header("Location: login_petugas.php");
+	}
 	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN masyarakat ON pengaduan.nik = masyarakat.nik");
 ?>
 

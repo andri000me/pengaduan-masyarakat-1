@@ -1,6 +1,8 @@
 <?php 
 	require '../koneksi.php';
-	
+	if (!isset($_SESSION['id_petugas'])) {
+		header("Location: login_petugas.php");
+	}
 	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
 	
 	$id_pengaduan = $_GET['id_pengaduan'];

@@ -1,5 +1,8 @@
 <?php 
 	require '../koneksi.php';
+	if (!isset($_SESSION['id_petugas'])) {
+		header("Location: login_petugas.php");
+	}
 ?>
 
 <!DOCTYPE html>

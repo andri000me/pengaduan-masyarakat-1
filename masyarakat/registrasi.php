@@ -1,5 +1,10 @@
 <?php 
 	require '../koneksi.php';
+	
+	if (isset($_SESSION['nik'])) {
+		header("Location: dashboard.php");
+	}
+
 	if (isset($_POST['btnInsertMasyarakat'])) {
 		$nik = $_POST['nik'];
 		$nama = $_POST['nama'];

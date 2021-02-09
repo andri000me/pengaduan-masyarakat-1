@@ -1,5 +1,8 @@
 <?php 
 	require '../koneksi.php';
+	if (!isset($_SESSION['id_petugas'])) {
+		header("Location: login_petugas.php");
+	}
 	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE status = 'proses'");
 
 	if (isset($_POST['btnInsertTanggapan'])) {

@@ -1,5 +1,8 @@
 <?php 
 	require '../koneksi.php';
+	if (!isset($_SESSION['id_petugas'])) {
+		header("Location: login_petugas.php");
+	}
 	if (isset($_POST['btnInsertPetugas'])) {
 		$nama_petugas = $_POST['nama_petugas'];
 		$username = $_POST['username'];

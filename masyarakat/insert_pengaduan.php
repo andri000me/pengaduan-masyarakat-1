@@ -1,5 +1,8 @@
 <?php 
 	require '../koneksi.php';
+	if (!isset($_SESSION['nik'])) {
+		header("Location: login_masyarakat.php");
+	}
 	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
 
 	if (isset($_POST['btnInsertPengaduan'])) {

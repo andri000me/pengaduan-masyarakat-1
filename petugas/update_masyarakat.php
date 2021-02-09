@@ -1,6 +1,8 @@
 <?php 
 	require '../koneksi.php';
-	
+	if (!isset($_SESSION['id_petugas'])) {
+		header("Location: login_petugas.php");
+	}
 	$nik = $_GET['nik'];
 	$getMasyarakatById = mysqli_query($koneksi, "SELECT * FROM masyarakat WHERE nik = '$nik'");
 	$dataMasyarakat = mysqli_fetch_assoc($getMasyarakatById);
