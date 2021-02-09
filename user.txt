@@ -1,0 +1,7 @@
+petugas:
+username: admin
+password: tes
+
+masyarakat:
+username: tes123
+password: tes
