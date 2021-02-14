@@ -3,7 +3,8 @@
 	if (!isset($_SESSION['nik'])) {
 		header("Location: login_masyarakat.php");
 	}
-	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN masyarakat ON pengaduan.nik = masyarakat.nik");
+	$nik = $_SESSION['nik'];
+	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN masyarakat ON pengaduan.nik = masyarakat.nik WHERE pengaduan.nik = '$nik'");
 ?>
 
 <!DOCTYPE html>
