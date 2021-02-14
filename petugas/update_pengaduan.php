@@ -13,6 +13,7 @@
 	if (isset($_POST['btnUpdatePengaduan'])) {
 		$nik = $_POST['nik'];
 		$tgl_pengaduan = $_POST['tgl_pengaduan'];
+		$status = $_POST['status'];
 		$isi_laporan = $_POST['isi_laporan'];
 
 		if ($_FILES['foto']['name'] != "") {
@@ -32,7 +33,7 @@
 			$foto = $_POST['foto_lama'];
 		}
 
-		$updatePengaduan = mysqli_query($koneksi, "UPDATE pengaduan SET tgl_pengaduan = '$tgl_pengaduan', nik = '$nik', isi_laporan = '$isi_laporan', foto = '$foto' WHERE id_pengaduan = '$id_pengaduan'");
+		$updatePengaduan = mysqli_query($koneksi, "UPDATE pengaduan SET tgl_pengaduan = '$tgl_pengaduan', nik = '$nik', isi_laporan = '$isi_laporan', status = '$status', foto = '$foto' WHERE id_pengaduan = '$id_pengaduan'");
 		if ($updatePengaduan) {
 			header("Location: show_pengaduan.php");
 		}
@@ -82,7 +83,12 @@
 			<tr>
 				<td><label>status</label></td>
 				<td>
-					<input type="text" disabled value="<?= $dataPengaduan['status']; ?>">
+					<select name="status" id="status">
+						<?php if ($dataPengaduan['status'] == 'proses'): ?>
+							<option value="proses">Proses</option>
+							<option value="selesai">Selesai</option>
+						<?php endif ?>
+					</select>
 				</td>
 			</tr>
 			<tr>
