@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Feb 2021 pada 12.51
+-- Waktu pembuatan: 16 Feb 2021 pada 09.54
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 7.4.13
 
@@ -20,6 +20,102 @@ SET time_zone = "+00:00";
 --
 -- Database: `pengaduan_masyarakat`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kecamatan`
+--
+
+CREATE TABLE `kecamatan` (
+  `id_kecamatan` int(11) NOT NULL,
+  `kecamatan` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kecamatan`
+--
+
+INSERT INTO `kecamatan` (`id_kecamatan`, `kecamatan`) VALUES
+(1, 'Ciputat'),
+(2, 'Ciputat Timur'),
+(3, 'Pamulang'),
+(4, 'Pondok Aren'),
+(5, 'Serpong'),
+(6, 'Serpong Utara'),
+(7, 'Setu');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kelurahan`
+--
+
+CREATE TABLE `kelurahan` (
+  `id_kelurahan` int(11) NOT NULL,
+  `kelurahan` varchar(100) NOT NULL,
+  `id_kecamatan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kelurahan`
+--
+
+INSERT INTO `kelurahan` (`id_kelurahan`, `kelurahan`, `id_kecamatan`) VALUES
+(1, 'Ciputat', 1),
+(2, 'Cipayung', 1),
+(3, 'Serua', 1),
+(4, 'Sawah Lama', 1),
+(5, 'Sawah Baru', 1),
+(6, 'Serua Indah', 1),
+(7, 'Jombang', 1),
+(8, 'Rengas', 2),
+(9, 'Rempoa', 2),
+(10, 'Cireundeu', 2),
+(11, 'Pondok Ranji', 2),
+(12, 'Cempaka Putih', 2),
+(13, 'Pisangan', 2),
+(14, 'Pondok Benda', 3),
+(15, 'Benda Baru', 3),
+(16, 'Bambu Apus', 3),
+(17, 'Kedaung', 3),
+(18, 'Pamulang Barat', 3),
+(19, 'Pamulang Timur', 3),
+(20, 'Pondok Cabe Udik', 3),
+(21, 'Pondok Cabe Ilir', 3),
+(22, 'Jurang Mangu Barat', 4),
+(23, 'Jurang Mangu Timur', 4),
+(24, 'Pondok Kacang Timur', 4),
+(25, 'Pondok Kacang Barat', 4),
+(26, 'Perigi Lama', 4),
+(27, 'Perigi Baru', 4),
+(28, 'Pondok Aren', 4),
+(29, 'Pondok Karya', 4),
+(30, 'Pondok Jaya', 4),
+(31, 'Pondok Betung', 4),
+(32, 'Pondok Pucung', 4),
+(33, 'Buaran', 5),
+(34, 'Ciater', 5),
+(35, 'Cilenggang', 5),
+(36, 'Lengkong Gudang', 5),
+(37, 'Lengkong Gudang Timur', 5),
+(38, 'Lengkong Wetan', 5),
+(39, 'Rawa Buntu', 5),
+(40, 'Rawa Mekar Jaya', 5),
+(41, 'Serpong', 5),
+(42, 'Jelupang', 6),
+(43, 'Lengkong Karya', 6),
+(44, 'Pakualam', 6),
+(45, 'Pakulonan', 6),
+(46, 'Paku Jaya', 6),
+(47, 'Pondok Jagung', 6),
+(48, 'Pondok Jagung Timur', 6),
+(49, 'Setu', 7),
+(50, 'Keranggan', 7),
+(51, 'Muncul', 7),
+(52, 'Babakan', 7),
+(53, 'Bakti Jaya', 7),
+(54, 'Kademangan', 7);
 
 -- --------------------------------------------------------
 
@@ -56,17 +152,20 @@ CREATE TABLE `pengaduan` (
   `nik` varchar(16) NOT NULL,
   `isi_laporan` text NOT NULL,
   `foto` varchar(255) NOT NULL,
-  `status` enum('proses','selesai') NOT NULL
+  `status` enum('proses','selesai') NOT NULL,
+  `id_kelurahan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pengaduan`
 --
 
-INSERT INTO `pengaduan` (`id_pengaduan`, `tgl_pengaduan`, `nik`, `isi_laporan`, `foto`, `status`) VALUES
-(1, '2021-02-10', '3670000000000000', 'asd', '7a4a66cc2e2c65d633ffb00b05e8f87d.jpg', 'selesai'),
-(2, '2021-02-10', '3670000000000000', 'asd', '1.PNG', 'selesai'),
-(9, '2021-02-09', '3670000000000000', 'asd', '1.PNG', 'selesai');
+INSERT INTO `pengaduan` (`id_pengaduan`, `tgl_pengaduan`, `nik`, `isi_laporan`, `foto`, `status`, `id_kelurahan`) VALUES
+(1, '2021-02-10', '3670000000000000', 'asd', '7a4a66cc2e2c65d633ffb00b05e8f87d.jpg', 'selesai', 1),
+(2, '2021-02-10', '3670000000000000', 'asd', '1.PNG', 'selesai', 2),
+(9, '2021-02-09', '3670000000000000', 'asd', '1.PNG', 'selesai', 3),
+(10, '2021-02-16', '3670000000000000', 'asdasd', 'c2b21bf1-6b36-45f0-81fc-95e30e208889.jpg', 'proses', 0),
+(15, '2021-02-16', '21312313123', 'saddsadasd', 'c2b21bf1-6b36-45f0-81fc-95e30e208889.jpg', 'proses', 50);
 
 -- --------------------------------------------------------
 
@@ -122,6 +221,19 @@ INSERT INTO `tanggapan` (`id_tanggapan`, `id_pengaduan`, `tgl_tanggapan`, `tangg
 --
 
 --
+-- Indeks untuk tabel `kecamatan`
+--
+ALTER TABLE `kecamatan`
+  ADD PRIMARY KEY (`id_kecamatan`);
+
+--
+-- Indeks untuk tabel `kelurahan`
+--
+ALTER TABLE `kelurahan`
+  ADD PRIMARY KEY (`id_kelurahan`),
+  ADD KEY `id_kecamatan` (`id_kecamatan`);
+
+--
 -- Indeks untuk tabel `masyarakat`
 --
 ALTER TABLE `masyarakat`
@@ -132,7 +244,8 @@ ALTER TABLE `masyarakat`
 --
 ALTER TABLE `pengaduan`
   ADD PRIMARY KEY (`id_pengaduan`),
-  ADD KEY `nik` (`nik`);
+  ADD KEY `nik` (`nik`),
+  ADD KEY `id_kelurahan` (`id_kelurahan`);
 
 --
 -- Indeks untuk tabel `petugas`
@@ -153,10 +266,22 @@ ALTER TABLE `tanggapan`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `kecamatan`
+--
+ALTER TABLE `kecamatan`
+  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `kelurahan`
+--
+ALTER TABLE `kelurahan`
+  MODIFY `id_kelurahan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
 -- AUTO_INCREMENT untuk tabel `pengaduan`
 --
 ALTER TABLE `pengaduan`
-  MODIFY `id_pengaduan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_pengaduan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `petugas`
@@ -169,6 +294,16 @@ ALTER TABLE `petugas`
 --
 ALTER TABLE `tanggapan`
   MODIFY `id_tanggapan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `kelurahan`
+--
+ALTER TABLE `kelurahan`
+  ADD CONSTRAINT `kelurahan_ibfk_1` FOREIGN KEY (`id_kecamatan`) REFERENCES `kecamatan` (`id_kecamatan`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
