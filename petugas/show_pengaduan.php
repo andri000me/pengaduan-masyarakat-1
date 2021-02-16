@@ -3,7 +3,7 @@
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
 	}
-	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN masyarakat ON pengaduan.nik = masyarakat.nik");
+	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN masyarakat ON pengaduan.nik = masyarakat.nik INNER JOIN kelurahan ON pengaduan.id_kelurahan = kelurahan.id_kelurahan");
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +26,7 @@
 				<th>Isi Laporan</th>
 				<th>Foto</th>
 				<th>Status</th>
+				<th>kelurahan</th>
 				<th>Aksi</th>
 			</tr>
 		</thead>
@@ -39,6 +40,7 @@
 					<td><?= $dataPengaduan['isi_laporan']; ?></td>
 					<td><img style="width: 150px" src="../img/<?= $dataPengaduan['foto']; ?>"></td>
 					<td><?= $dataPengaduan['status']; ?></td>
+					<td><?= $dataPengaduan['kelurahan']; ?></td>
 					<td>
 						<a href="update_pengaduan.php?id_pengaduan=<?= $dataPengaduan['id_pengaduan']; ?>">Ubah</a>
 						<a onclick="return confirm('Apakah anda yakin menghapus data pengaduan dengan isi laporan <?= $dataPengaduan['isi_laporan']; ?>?')" href="delete_pengaduan.php?id_pengaduan=<?= $dataPengaduan['id_pengaduan']; ?>">Hapus</a>

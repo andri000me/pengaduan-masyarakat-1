@@ -4,7 +4,7 @@
 		header("Location: login_masyarakat.php");
 	}
 	$nik = $_SESSION['nik'];
-	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN masyarakat ON pengaduan.nik = masyarakat.nik WHERE pengaduan.nik = '$nik'");
+	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN masyarakat ON pengaduan.nik = masyarakat.nik INNER JOIN kelurahan ON pengaduan.id_kelurahan = kelurahan.id_kelurahan WHERE pengaduan.nik = '$nik'");
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +27,7 @@
 				<th>Isi Laporan</th>
 				<th>Foto</th>
 				<th>Status</th>
+				<th>kelurahan</th>
 				<th>Aksi</th>
 			</tr>
 		</thead>
@@ -40,6 +41,7 @@
 					<td><?= $dataPengaduan['isi_laporan']; ?></td>
 					<td><img style="width: 150px" src="../img/<?= $dataPengaduan['foto']; ?>"></td>
 					<td><?= $dataPengaduan['status']; ?></td>
+					<td><?= $dataPengaduan['kelurahan']; ?></td>
 					<td>
 						<?php if ($dataPengaduan['status'] == 'proses'): ?>
 							<a href="update_pengaduan.php?id_pengaduan=<?= $dataPengaduan['id_pengaduan']; ?>">Ubah</a>

@@ -6,14 +6,19 @@
 	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
 	
 	$id_pengaduan = $_GET['id_pengaduan'];
-	$getPengaduanById = mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE id_pengaduan = '$id_pengaduan'");
+	$getPengaduanById = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN kelurahan ON pengaduan.id_kelurahan = kelurahan.id_kelurahan WHERE pengaduan.id_pengaduan = '$id_pengaduan'");
 	$dataPengaduan = mysqli_fetch_assoc($getPengaduanById);
+	$id_kelurahan = $dataPengaduan['id_kelurahan'];
 
+	$getIdKecamatanByIdKelurahan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM kelurahan WHERE id_kelurahan = '$id_kelurahan'"));
+	$id_kecamatan = $getIdKecamatanByIdKelurahan['id_kecamatan'];
+	$getDataKecamatanByIdKelurahan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM kecamatan WHERE id_kecamatan = '$id_kecamatan'"));
 
 	if (isset($_POST['btnUpdatePengaduan'])) {
 		$nik = $_SESSION['nik'];
 		$tgl_pengaduan = $_POST['tgl_pengaduan'];
 		$isi_laporan = $_POST['isi_laporan'];
+		$id_kelurahan = $_POST['id_kelurahan'];
 
 		if ($_FILES['foto']['name'] != "") {
 			$ekstensi_diperbolehkan	= array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
@@ -32,7 +37,7 @@
 			$foto = $_POST['foto_lama'];
 		}
 
-		$updatePengaduan = mysqli_query($koneksi, "UPDATE pengaduan SET tgl_pengaduan = '$tgl_pengaduan', nik = '$nik', isi_laporan = '$isi_laporan', foto = '$foto' WHERE id_pengaduan = '$id_pengaduan'");
+		$updatePengaduan = mysqli_query($koneksi, "UPDATE pengaduan SET tgl_pengaduan = '$tgl_pengaduan', nik = '$nik', isi_laporan = '$isi_laporan', foto = '$foto', id_kelurahan = '$id_kelurahan' WHERE id_pengaduan = '$id_pengaduan'");
 		if ($updatePengaduan) {
 			header("Location: show_pengaduan.php");
 		}
@@ -44,6 +49,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ubah Pengaduan - <?= $dataPengaduan['isi_laporan']; ?></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 </head>
 <body>
 	<?php include 'sidebar.php'; ?>
@@ -66,6 +72,37 @@
 				<td><textarea name="isi_laporan"><?= $dataPengaduan['isi_laporan']; ?></textarea></td>
 			</tr>
 			<tr>
+				<td><label>Kecamatan</label></td>
+				<td>
+					<select id="form_kecamatan">
+						<option value="<?= $getDataKecamatanByIdKelurahan['id_kecamatan']; ?>"><?= $getDataKecamatanByIdKelurahan['kecamatan']; ?></option>
+						<?php 
+						$kecamatan = mysqli_query($koneksi,"SELECT * FROM kecamatan ORDER BY kecamatan ASC");
+						?>
+						<?php foreach ($kecamatan as $dataKecamatan): ?>
+							<option value="<?= $dataKecamatan['id_kecamatan']; ?>"><?= $dataKecamatan['kecamatan']; ?></option>
+						<?php endforeach ?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Kelurahan</label></td>
+				<td>
+					<select id="form_kelurahan" name="id_kelurahan">
+						<?php 
+							$dataKelurahanLama = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT * FROM kelurahan WHERE id_kelurahan = '$id_kelurahan' ORDER BY kelurahan ASC"));
+						?>
+						<option value="<?= $dataKelurahanLama['id_kelurahan']; ?>"><?= $dataKelurahanLama['kelurahan']; ?></option>
+						<?php 
+							$kelurahan = mysqli_query($koneksi,"SELECT * FROM kelurahan WHERE id_kecamatan = '$id_kecamatan' ORDER BY kelurahan ASC");
+						?>
+						<?php foreach ($kelurahan as $dataKelurahan): ?>
+							<option value="<?= $dataKelurahan['id_kelurahan']; ?>"><?= $dataKelurahan['kelurahan']; ?></option>
+						<?php endforeach ?>
+					</select>
+				</td>
+			</tr>
+			<tr>
 				<td><label>Foto</label></td>
 				<td>
 					<img style="width: 75px" src="../img/<?= $dataPengaduan['foto']; ?>" alt="foto"><br>
@@ -83,5 +120,24 @@
 			</tr>
 		</table>
 	</form>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$('body').on("change", "#form_kecamatan", function() {
+				var id = $(this).val();
+				var data = "id="+id+"&data=kelurahan";
+				$.ajax({
+					type: 'POST',
+					url: "get_kelurahan.php",
+					data: data,
+					success: function(hasil) {
+						$("#form_kelurahan").html(hasil);
+						$("#form_kelurahan").show();
+					}
+				});
+			});
+		});
+	</script>
 </body>
+
 </html>
