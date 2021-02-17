@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Feb 2021 pada 09.54
+-- Waktu pembuatan: 17 Feb 2021 pada 09.26
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 7.4.13
 
@@ -137,8 +137,8 @@ CREATE TABLE `masyarakat` (
 --
 
 INSERT INTO `masyarakat` (`nik`, `nama`, `username`, `password`, `telp`, `alamat`) VALUES
-('21312313123', 'tes2323', 'asd', '$2y$10$1Vd87nOV4PP/7FgK3EE7gOCJw90hrNzD6SGwsHcD//mbdQ1aY1mum', '2132323', 'asdasd2'),
-('3670000000000000', 'tesasd', 'tes123', '$2y$10$sIc2m/nSDBzVYyqGmMaCJONJSUMt3wmhr9CfSDAfAeCS318TNoz8e', '0812345678922', 'tes alamatsad');
+('3670000000000000', 'tesasd', 'tes123', '$2y$10$sIc2m/nSDBzVYyqGmMaCJONJSUMt3wmhr9CfSDAfAeCS318TNoz8e', '0812345678922', 'tes alamatsad'),
+('3674070108580001', 'tes', 'asd', '$2y$10$1Vd87nOV4PP/7FgK3EE7gOCJw90hrNzD6SGwsHcD//mbdQ1aY1mum', '2132323', 'asdasd2');
 
 -- --------------------------------------------------------
 
@@ -165,7 +165,10 @@ INSERT INTO `pengaduan` (`id_pengaduan`, `tgl_pengaduan`, `nik`, `isi_laporan`, 
 (2, '2021-02-10', '3670000000000000', 'asd', '1.PNG', 'selesai', 2),
 (9, '2021-02-09', '3670000000000000', 'asd', '1.PNG', 'selesai', 3),
 (10, '2021-02-16', '3670000000000000', 'asdasd', 'c2b21bf1-6b36-45f0-81fc-95e30e208889.jpg', 'proses', 0),
-(15, '2021-02-16', '21312313123', 'saddsadasd', 'c2b21bf1-6b36-45f0-81fc-95e30e208889.jpg', 'proses', 50);
+(15, '2021-02-16', '21312313123', 'saddsadasd', 'c2b21bf1-6b36-45f0-81fc-95e30e208889.jpg', 'proses', 50),
+(16, '2021-02-17', '3670000000000000', 'tes', 'border.png', 'selesai', 49),
+(17, '2021-02-17', '3670000000000000', 'tes', 'default_profile.png', 'proses', 53),
+(18, '2021-02-17', '3670000000000000', 'tes', '7a4a66cc2e2c65d633ffb00b05e8f87d.jpg', 'proses', 53);
 
 -- --------------------------------------------------------
 
@@ -187,8 +190,9 @@ CREATE TABLE `petugas` (
 --
 
 INSERT INTO `petugas` (`id_petugas`, `nama_petugas`, `username`, `password`, `telp`, `level`) VALUES
-(1, 'admin', 'admin', '$2y$10$sIc2m/nSDBzVYyqGmMaCJONJSUMt3wmhr9CfSDAfAeCS318TNoz8e', '0812345678229', 'admin'),
-(3, 'Andri Firman Saputra', 'andri123', '$2y$10$66nugRlHWpboGYjMT9uk8OUvYdrjTYDZuU5.iaVX2ZQSUDDIeuEOi', '087808675313', 'petugas');
+(1, 'admin', 'admin', '$2y$10$sIc2m/nSDBzVYyqGmMaCJONJSUMt3wmhr9CfSDAfAeCS318TNoz8e', '08', 'admin'),
+(3, 'Andri Firman', 'andri123', '$2y$10$sIc2m/nSDBzVYyqGmMaCJONJSUMt3wmhr9CfSDAfAeCS318TNoz8e', '08', 'petugas'),
+(5, 'tes', 'tes', '$2y$10$YV5Q5w6OVtkcWzGol5BYceV2oP8bJ.4.d.wa87KCRsipsYjKWEIVy', '123', 'petugas');
 
 -- --------------------------------------------------------
 
@@ -214,7 +218,8 @@ INSERT INTO `tanggapan` (`id_tanggapan`, `id_pengaduan`, `tgl_tanggapan`, `tangg
 (5, 0, '2021-02-09', 'asdasdasdad', 3),
 (6, 0, '2021-02-09', 'asdasdasdasd', 3),
 (7, 0, '2021-02-09', 'asdasd', 3),
-(10, 9, '2021-02-09', 'asdasdasd', 1);
+(10, 9, '2021-02-09', 'asdasdasd', 1),
+(11, 16, '2021-02-17', 'tes', 3);
 
 --
 -- Indexes for dumped tables
@@ -281,19 +286,19 @@ ALTER TABLE `kelurahan`
 -- AUTO_INCREMENT untuk tabel `pengaduan`
 --
 ALTER TABLE `pengaduan`
-  MODIFY `id_pengaduan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_pengaduan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `petugas`
 --
 ALTER TABLE `petugas`
-  MODIFY `id_petugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_petugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tanggapan`
 --
 ALTER TABLE `tanggapan`
-  MODIFY `id_tanggapan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_tanggapan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
