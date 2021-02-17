@@ -3,6 +3,7 @@
 
 	if (isset($_SESSION['id_petugas'])) {
 		header("Location: dashboard.php");
+		exit();
 	}
 
 	if (isset($_POST['btnLogin'])) {

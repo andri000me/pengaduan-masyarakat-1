@@ -2,10 +2,21 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['nik'])) {
 		header("Location: login_masyarakat.php");
+		exit();
 	}
-	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
 	
 	$id_pengaduan = $_GET['id_pengaduan'];
+
+	// jika status pengaduan selesai, tidak dapat diubah
+	$dataPengaduan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE id_pengaduan = '$id_pengaduan'"));
+
+	if ($dataPengaduan['status'] == 'selesai') {
+		echo "data pengaduan tidak dapat diubah, karena statusnya selesai";
+		header("Location: show_pengaduan.php");
+	}
+
+	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
+	
 	$getPengaduanById = mysqli_query($koneksi, "SELECT * FROM pengaduan INNER JOIN kelurahan ON pengaduan.id_kelurahan = kelurahan.id_kelurahan WHERE pengaduan.id_pengaduan = '$id_pengaduan'");
 	$dataPengaduan = mysqli_fetch_assoc($getPengaduanById);
 	$id_kelurahan = $dataPengaduan['id_kelurahan'];
@@ -21,7 +32,7 @@
 		$id_kelurahan = $_POST['id_kelurahan'];
 
 		if ($_FILES['foto']['name'] != "") {
-			$ekstensi_diperbolehkan	= array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
+			$ekstensi_diperbolehkan	= array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG', '*');
 			$foto = $_FILES['foto']['name'];
 			$x = explode('.', $foto);
 			$ekstensi = strtolower(end($x));

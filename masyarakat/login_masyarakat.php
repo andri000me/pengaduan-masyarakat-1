@@ -3,6 +3,7 @@
 
 	if (isset($_SESSION['nik'])) {
 		header("Location: dashboard.php");
+		exit();
 	}
 
 	if (isset($_POST['btnLogin'])) {

@@ -2,7 +2,9 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
+		exit();
 	}
+	
 	$petugas = mysqli_query($koneksi, "SELECT * FROM petugas");
 ?>
 <!DOCTYPE html>
@@ -14,8 +16,11 @@
 </head>
 <body>
 	<?php include 'sidebar.php'; ?>
-	
-	<a href="insert_petugas.php">Tambah Petugas</a>
+
+	<?php if ($_SESSION['level'] == 'admin'): ?>
+		<a href="insert_petugas.php">Tambah Petugas</a>
+	<?php endif ?>	
+
 	<table border="1" cellpadding="10" cellspacing="0">
 		<thead>
 			<tr>
@@ -24,7 +29,9 @@
 				<th>Username</th>
 				<th>No. Telepon</th>
 				<th>Level</th>
-				<th>Aksi</th>
+				<?php if ($_SESSION['level'] == 'admin'): ?>
+					<th>Aksi</th>
+				<?php endif ?>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,14 +43,14 @@
 					<td><?= $dataPetugas['username']; ?></td>
 					<td><?= $dataPetugas['telp']; ?></td>
 					<td><?= $dataPetugas['level']; ?></td>
-					<td>
-						<?php if ($dataPetugas['level'] != 'admin'): ?>
-							<a href="update_petugas.php?id_petugas=<?= $dataPetugas['id_petugas']; ?>">Ubah</a>
-							<a onclick="return confirm('Apakah anda yakin ingin menghapus data petugas dengan username <?= $dataPetugas['username']; ?>?')" href="delete_petugas.php?id_petugas=<?= $dataPetugas['id_petugas']; ?>">Hapus</a>
-						<?php else: ?>
-							<span>Admin</span>
-						<?php endif ?>
-					</td>
+					<?php if ($_SESSION['level'] == 'admin'): ?>
+						<td>
+							<?php if ($dataPetugas['level'] != 'admin'): ?>
+								<a href="update_petugas.php?id_petugas=<?= $dataPetugas['id_petugas']; ?>">Ubah</a>
+								<a onclick="return confirm('Apakah anda yakin ingin menghapus data petugas dengan username <?= $dataPetugas['username']; ?>?')" href="delete_petugas.php?id_petugas=<?= $dataPetugas['id_petugas']; ?>">Hapus</a>
+							<?php endif ?>
+						</td>
+					<?php endif ?>
 				</tr>
 			<?php endforeach ?>
 		</tbody>

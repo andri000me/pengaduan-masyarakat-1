@@ -2,7 +2,15 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
+		exit();
 	}
+	// jika level petugas selain admin, tidak dapat menghapus
+	if ($_SESSION['level'] != 'admin') {
+		echo "data pengaduan tidak dapat ditambah, karena bukan admin";
+		header("Location: show_pengaduan.php");
+		exit();
+	}
+
 	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
 
 	if (isset($_POST['btnInsertPengaduan'])) {

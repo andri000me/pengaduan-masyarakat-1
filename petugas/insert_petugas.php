@@ -2,7 +2,16 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
+		exit();
 	}
+
+	// jika level petugas selain admin, tidak dapat menghapus
+	if ($_SESSION['level'] != 'admin') {
+		echo "data petugas tidak dapat ditambah, karena bukan admin";
+		header("Location: show_petugas.php");
+		exit();
+	}
+
 	if (isset($_POST['btnInsertPetugas'])) {
 		$nama_petugas = $_POST['nama_petugas'];
 		$username = $_POST['username'];

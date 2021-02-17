@@ -2,6 +2,7 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['nik'])) {
 		header("Location: login_masyarakat.php");
+		exit();
 	}
 	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
 
@@ -13,7 +14,7 @@
 		$id_kelurahan = $_POST['id_kelurahan'];
 
 		if ($_FILES['foto']['name']) {
-			$ekstensi_diperbolehkan	= array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
+			$ekstensi_diperbolehkan	= array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG', '*');
 			$foto = $_FILES['foto']['name'];
 			$x = explode('.', $foto);
 			$ekstensi = strtolower(end($x));

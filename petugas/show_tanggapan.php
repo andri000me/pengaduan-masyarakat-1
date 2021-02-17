@@ -2,6 +2,7 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
+		exit();
 	}
 	$tanggapan = mysqli_query($koneksi, "SELECT * FROM tanggapan INNER JOIN pengaduan ON tanggapan.id_pengaduan = pengaduan.id_pengaduan INNER JOIN petugas ON tanggapan.id_petugas = petugas.id_petugas ORDER BY pengaduan.tgl_pengaduan");
 ?>
@@ -16,7 +17,6 @@
 <body>
 	<?php include 'sidebar.php'; ?>
 	
-	<a href="insert_tanggapan.php">Tambah Tanggapan</a>
 	<table border="1" cellpadding="10" cellspacing="0">
 		<thead>
 			<tr>
@@ -41,7 +41,9 @@
 					<td><?= $dataTanggapan['nama_petugas']; ?></td>
 					<td>
 						<a href="update_tanggapan.php?id_tanggapan=<?= $dataTanggapan['id_tanggapan']; ?>">Ubah</a>
-						<a onclick="return confirm('Apakah anda yakin menghapus data tanggapan dengan tanggapan <?= $dataTanggapan['tanggapan']; ?>?')" href="delete_tanggapan.php?id_tanggapan=<?= $dataTanggapan['id_tanggapan'] ?>">Hapus</a>
+						<?php if ($_SESSION['level'] == 'admin'): ?>
+							<a onclick="return confirm('Apakah anda yakin menghapus data tanggapan dengan tanggapan <?= $dataTanggapan['tanggapan']; ?>?')" href="delete_tanggapan.php?id_tanggapan=<?= $dataTanggapan['id_tanggapan'] ?>">Hapus</a>
+						<?php endif ?>
 					</td>
 				</tr>
 			<?php endforeach ?>

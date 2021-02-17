@@ -2,7 +2,9 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['nik'])) {
 		header("Location: login_masyarakat.php");
+		exit();
 	}
+	
 	$nik = $_SESSION['nik'];
 	$tanggapan = mysqli_query($koneksi, "SELECT * FROM tanggapan INNER JOIN pengaduan ON tanggapan.id_pengaduan = pengaduan.id_pengaduan INNER JOIN petugas ON tanggapan.id_petugas = petugas.id_petugas WHERE pengaduan.nik = '$nik'");
 ?>

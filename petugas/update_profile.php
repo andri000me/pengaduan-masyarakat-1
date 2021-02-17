@@ -2,7 +2,9 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
+		exit();
 	}
+	
 	$id_petugas = $_SESSION['id_petugas'];
 	$getPetugasById = mysqli_query($koneksi, "SELECT * FROM petugas WHERE id_petugas = '$id_petugas'");
 	$dataPetugas = mysqli_fetch_assoc($getPetugasById);

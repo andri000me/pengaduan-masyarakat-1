@@ -3,4 +3,5 @@
 	
 	session_destroy();
 	header('Location: login_masyarakat.php');
+	exit();
 ?>

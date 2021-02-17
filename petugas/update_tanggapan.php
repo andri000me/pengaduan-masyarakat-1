@@ -2,7 +2,9 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
+		exit();
 	}
+
 	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan");
 	$petugas = mysqli_query($koneksi, "SELECT * FROM petugas");
 	

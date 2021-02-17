@@ -2,11 +2,21 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
+		exit();
 	}
-	$pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE status = 'proses'");
+
+	$id_pengaduan = $_GET['id_pengaduan'];
+
+	$pengaduan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE id_pengaduan = '$id_pengaduan'"));
+
+	if ($pengaduan['status'] == 'selesai') {
+		echo "data pengaduan tidak dapat ditanggapi, karena sudah selesai";
+		header("Location: show_pengaduan.php");
+		exit();
+	}
+
 
 	if (isset($_POST['btnInsertTanggapan'])) {
-		$id_pengaduan = $_POST['id_pengaduan'];
 		$tgl_tanggapan = $_POST['tgl_tanggapan'];
 		$tanggapan = $_POST['tanggapan'];
 		$id_petugas = $_SESSION['id_petugas'];
@@ -28,16 +38,13 @@
 </head>
 <body>
 	<?php include 'sidebar.php'; ?>
+	<h3>Menanggapi isi laporan <?= $pengaduan['isi_laporan']; ?></h3>
 	<form method="post">
 		<table border="1" cellpadding="10" cellspacing="0">
 			<tr>
 				<td><label>Isi Laporan</label></td>
 				<td>
-					<select name="id_pengaduan">
-						<?php foreach ($pengaduan as $dataPengaduan): ?>
-							<option value="<?= $dataPengaduan['id_pengaduan']; ?>"><?= $dataPengaduan['isi_laporan']; ?></option>
-						<?php endforeach ?>
-					</select>
+					<input type="text" disabled value="<?= $pengaduan['isi_laporan']; ?>">
 				</td>
 			</tr>
 			<tr>

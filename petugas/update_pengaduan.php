@@ -2,7 +2,16 @@
 	require '../koneksi.php';
 	if (!isset($_SESSION['id_petugas'])) {
 		header("Location: login_petugas.php");
+		exit();
 	}
+
+	// jika level petugas selain admin, tidak dapat menghapus
+	if ($_SESSION['level'] != 'admin') {
+		echo "data pengaduan tidak dapat diubah, karena bukan admin";
+		header("Location: show_pengaduan.php");
+		exit();
+	}
+	
 	$masyarakat = mysqli_query($koneksi, "SELECT * FROM masyarakat ORDER BY nik ASC");
 	
 	$id_pengaduan = $_GET['id_pengaduan'];
@@ -16,7 +25,6 @@
 
 
 	if (isset($_POST['btnUpdatePengaduan'])) {
-		$nik = $_POST['nik'];
 		$tgl_pengaduan = $_POST['tgl_pengaduan'];
 		$status = $_POST['status'];
 		$isi_laporan = $_POST['isi_laporan'];
@@ -38,7 +46,7 @@
 			$foto = $_POST['foto_lama'];
 		}
 
-		$updatePengaduan = mysqli_query($koneksi, "UPDATE pengaduan SET tgl_pengaduan = '$tgl_pengaduan', nik = '$nik', isi_laporan = '$isi_laporan', status = '$status', foto = '$foto', id_kelurahan = '$id_kelurahan' WHERE id_pengaduan = '$id_pengaduan'");
+		$updatePengaduan = mysqli_query($koneksi, "UPDATE pengaduan SET tgl_pengaduan = '$tgl_pengaduan', isi_laporan = '$isi_laporan', status = '$status', foto = '$foto', id_kelurahan = '$id_kelurahan' WHERE id_pengaduan = '$id_pengaduan'");
 		if ($updatePengaduan) {
 			header("Location: show_pengaduan.php");
 		}
@@ -61,14 +69,7 @@
 			<tr>
 				<td><label>NIK</label></td>
 				<td>
-					<select name="nik" id="nik">
-						<option value="<?= $dataPengaduan['nik']; ?>"><?= $dataPengaduan['nik']; ?></option>
-						<?php foreach ($masyarakat as $dataMasyarakat): ?>
-							<?php if ($dataPengaduan['nik'] != $dataMasyarakat['nik']): ?>
-								<option value="<?= $dataMasyarakat['nik']; ?>"><?= $dataMasyarakat['nik']; ?></option>
-							<?php endif ?>
-						<?php endforeach ?>
-					</select>
+					<input type="text" disabled value="<?= $dataPengaduan['nik']; ?>">
 				</td>
 			</tr>
 			<tr>
